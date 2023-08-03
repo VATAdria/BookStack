@@ -39,7 +39,8 @@ class LoginController extends Controller
     public function getLogin(Request $request)
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $authMethod = config('auth.method');
+        // $authMethod = config('auth.method');
+        $authMethod = env('AUTH');
         $preventInitiation = $request->get('prevent_auto_init') === 'true';
 
         if ($request->has('email')) {

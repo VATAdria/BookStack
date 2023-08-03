@@ -5,6 +5,7 @@ namespace BookStack\Auth;
 use BookStack\Actions\Favourite;
 use BookStack\Api\ApiToken;
 use BookStack\Auth\Access\Mfa\MfaValue;
+use BookStack\Entities\Models\Handover;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Interfaces\Loggable;
 use BookStack\Interfaces\Sluggable;
@@ -74,6 +75,75 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'password', 'remember_token', 'system_name', 'email_confirmed', 'external_auth_id', 'email',
         'created_at', 'updated_at', 'image_id', 'roles', 'avatar', 'user_id', 'pivot',
     ];
+
+     /**
+     * Link to handover data
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @throws MissingHandoverObjectException
+     */
+    public function handover()
+    {
+        $handover = $this->hasOne(Handover::class, 'id');
+
+        // if ($handover->first() == null) {
+        //     throw new MissingHandoverObjectException($this->id);
+        // }
+
+        return $handover;
+    }
+
+    // Get properties from Handover, the variable names here break with the convention.
+    public function getLastNameAttribute()
+    {
+        return $this->handover->last_name;
+    }
+
+    public function getFirstNameAttribute()
+    {
+        return $this->handover->first_name;
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->handover->email;
+    }
+
+    public function getRatingAttribute()
+    {
+        return $this->handover->rating;
+    }
+
+    public function getRatingShortAttribute()
+    {
+        return $this->handover->rating_short;
+    }
+
+    public function getRatingLongAttribute()
+    {
+        return $this->handover->rating_long;
+    }
+
+    public function getDivisionAttribute(){
+        return $this->handover->division;
+    }
+
+    public function getSubdivisionAttribute(){
+        return $this->handover->subdivision;
+    }
+
+    public function getCountryAttribute(){
+        return $this->handover->country;
+    }
+
+    public function getActiveAttribute(){
+        $val = $this->handover->atc_active;
+
+        if ($val == null)
+            return false;
+
+        return $val;
+    }
 
     /**
      * This holds the user's permissions when loaded.

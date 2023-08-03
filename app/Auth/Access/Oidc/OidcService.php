@@ -273,6 +273,7 @@ class OidcService
      */
     protected function config(): array
     {
+        dd(config('oidc'));
         return config('oidc');
     }
 

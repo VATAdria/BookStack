@@ -3,7 +3,7 @@
 
     <div>
         <button id="oidc-login" class="button outline svg">
-            @icon('oidc')
+            @icon('vatsim1')
             <span>{{ trans('auth.log_in_with', ['socialDriver' => config('oidc.name')]) }}</span>
         </button>
     </div>

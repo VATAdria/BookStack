@@ -4,6 +4,7 @@ use BookStack\Http\Controllers\Api;
 use BookStack\Http\Controllers\AttachmentController;
 use BookStack\Http\Controllers\AuditLogController;
 use BookStack\Http\Controllers\Auth;
+use BookStack\Http\Controllers\Auth\OauthLoginController;
 use BookStack\Http\Controllers\BookController;
 use BookStack\Http\Controllers\BookExportController;
 use BookStack\Http\Controllers\BookshelfController;
@@ -41,6 +42,13 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 Route::get('/status', [StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
 Route::get('/favicon.ico', [HomeController::class, 'favicon']);
+
+//--------------------------------------------------------------------------
+// VATSIM Authentication
+//--------------------------------------------------------------------------
+Route::get('/authorize', [OauthLoginController::class, 'login'])->name('authorize.login');
+Route::get('/authorize/validate', [OauthLoginController::class, 'validateLogin'])->middleware('authorize.guest');
+Route::get('/authorize/logout', [OauthLoginController::class, 'logout'])->name('authorize.logout');
 
 // Authenticated routes...
 Route::middleware('auth')->group(function () {

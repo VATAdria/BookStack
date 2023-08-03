@@ -14,7 +14,7 @@ return [
 
     // The environment to run BookStack in.
     // Options: production, development, demo, testing
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'development'),
 
     // Enter the application in debug mode.
     // Shows much more verbose error messages. Has potential to show
@@ -53,7 +53,8 @@ return [
 
     // Application Base URL, Used by laravel in development commands
     // and used by BookStack in URL generation.
-    'url' => env('APP_URL', '') === 'http://bookstack.dev' ? '' : env('APP_URL', ''),
+    // 'url' => env('APP_URL', '') === 'http://bookstack.dev' ? '' : env('APP_URL', ''),
+    'url' => env('APP_URL'),
 
     // A list of hosts that BookStack can be iframed within.
     // Space separated if multiple. BookStack host domain is auto-inferred.
